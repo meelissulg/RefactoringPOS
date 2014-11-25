@@ -16,12 +16,12 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 
     private static final long serialVersionUID = 1L;
 
-    protected List<T> rows;
+    //protected List<T> rows;
     protected final String[] headers;
 
     public SalesSystemTableModel(final String[] headers) {
         this.headers = headers;
-        rows = new ArrayList<T>();
+        //rows = new ArrayList<T>();
     }
 
     /**
@@ -43,47 +43,52 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
     }
 
     public int getRowCount() {
-        return rows.size();
+    	//muutus
+        return getTableRows().size();
     }
 
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return getColumnValue(rows.get(rowIndex), columnIndex);
+        //muutus
+    	return getColumnValue(getTableRows().get(rowIndex), columnIndex);
     }
-
+    
     // search for item with the specified id
     public T getItemById(final long id) {
-        for (final T item : rows) {
+    	//muutus
+        for (final T item : getTableRows()) {
             if (item.getId() == id)
                 return item;
         }
         throw new NoSuchElementException();
     }
-
-    public List<T> getTableRows() {
-        return rows;
-    }
-
+    // tehtud abstraktseks
+    abstract public List<T> getTableRows();
+//??
     public void clear() {
-        rows = new ArrayList<T>();
+        //rows = new ArrayList<T>();
         fireTableDataChanged();
-    }
-
+   }
+//++
     public void populateWithData(final List<T> data) {
-        rows.clear();
-        rows.addAll(data);
+    	//muutus
+        getTableRows().clear();
+        getTableRows().addAll(data);
     }
     
     public void addRow(T row) {
-        rows.add(row);
+    	//muutus
+        getTableRows().add(row);
         fireTableDataChanged();
     }
     
     public T getRow(int index) {
-        return rows.get(index);
+    	//muutus
+        return getTableRows().get(index);
     }
     
-    public List<T> getRows() {
-        return rows;
-    }
+    //??
+    //public List<T> getRows() {
+      //  return rows;
+    //}
     
 }
