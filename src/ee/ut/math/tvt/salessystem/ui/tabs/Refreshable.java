@@ -6,7 +6,7 @@ import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 
 public interface Refreshable {
 	
-	public void refresh(SalesDomainController dc);
+	public void refresh();
 	public Component draw();
 	
 }

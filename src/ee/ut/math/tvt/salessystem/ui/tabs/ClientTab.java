@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,14 +13,18 @@ import javax.swing.JTable;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.Client;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 
 public class ClientTab implements Refreshable{
 	
+	//lisatud logger
 	private static final Logger log = Logger.getLogger(ClientTab.class);
     
 	private SalesSystemModel model;
+	
+	private SalesDomainController domainController;
     
     public ClientTab(SalesSystemModel model) {
         this.model = model;
@@ -70,11 +75,12 @@ public class ClientTab implements Refreshable{
         gc.weighty = 1.0;
         return gc;
     }
-
+    
+    //lisatud refresh
 	@Override
-	public void refresh(SalesDomainController dc) {
-		this.model.getClientTableModel().populateWithData(dc.getAllClients());
-    	this.model.getClientTableModel().fireTableDataChanged();
+	public void refresh() {
+		List <Client> clients = domainController.getAllClients();
+        model.getClientTableModel().populateWithData(clients);
     	log.debug("Refresh called on ClientTab");
 	}    
     

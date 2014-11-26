@@ -132,14 +132,29 @@ public class ConsoleUI {
                 return;
             }
             try {
+            	//loon listi solditems'ite jaoks
                 List<SoldItem> soldItems = new ArrayList<SoldItem>();
+                
+                //lisan solditems'id cart'ist loodud listi
                 for(StockItem stockItem : cart) {
                     soldItems.add(new SoldItem(stockItem, stockItem.getQuantity()));
                 }
-                Sale sale = new Sale(soldItems);
-                sale.setClient(selectedClient);
+                //MUUTUS
+                // loon sale'i 
+                Sale sale = new Sale(selectedClient);
+                //Sale sale = new Sale(soldItems);
+                
+                // lisan items'id
+                sale.setSoldItems(soldItems);
+                //sale.setClient(selectedClient);
+                
+                // ostuaeg
                 sale.setSellingTime(new Date());
+                
+                // registreerin ostu
                 dc.registerSale(sale);
+                
+               
                 cart.clear();
             } catch (VerificationFailedException e) {
                 log.error(e.getMessage());

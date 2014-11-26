@@ -20,7 +20,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 
     public SalesSystemTableModel(final String[] headers) {
         this.headers = headers;
-        //rows = new ArrayList<T>();
     }
 
     /**
@@ -57,24 +56,31 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
         }
         throw new NoSuchElementException();
     }
-
+    //MUUTUS
+    //abstraksteks
     public abstract List<T> getTableRows() ;
-
+    
+    //MUUTUS
+    //abstraktseks
     public abstract void clear();
 
+    
     public void populateWithData(final List<T> data) {
     	getTableRows().clear();
     	getTableRows().addAll(data);
     }
+    
     
     public void addRow(T row) {
     	getTableRows().add(row);
         fireTableDataChanged();
     }
     
+    
     public T getRow(int index) {
         return getTableRows().get(index);
     }
+    
     
     public List<T> getRows() {
         return getTableRows();

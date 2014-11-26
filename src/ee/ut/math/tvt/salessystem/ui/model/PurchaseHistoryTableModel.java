@@ -14,10 +14,13 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 	private static final long serialVersionUID = 1L;
 
 	private static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+	
+	//MUUTUS
 	private List<Sale> rows;
 	
 	public PurchaseHistoryTableModel() {
 		super(new String[] { "Id", "Time", "Sum", "Client" });
+		//MUUTUS
 		this.rows = new ArrayList<Sale>();
 	}
 
@@ -53,12 +56,13 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 
 		return buffer.toString();
 	}
-
+	//MUUTUS
 	@Override
 	public List<Sale> getTableRows() {
 		return this.rows;
 	}
-
+	
+	//MUUTUS
 	@Override
 	public void clear() {
 		rows.clear();

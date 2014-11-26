@@ -15,9 +15,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
+	//MUUTUS
 	private List<StockItem> rows;
+	
 	public StockTableModel() {
 		super(new String[] {"Id", "Name", "Price", "Quantity"});
+		//MUUTUS
 		this.rows = new ArrayList<StockItem>();
 	}
 
@@ -97,12 +100,14 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 
 		return buffer.toString();
 	}
-
+	
+	//MUUTUS
 	@Override
 	public List<StockItem> getTableRows() {
 		return this.rows;
 	}
-
+	
+	//MUUTUS
 	@Override
 	public void clear() {
 		rows.clear();

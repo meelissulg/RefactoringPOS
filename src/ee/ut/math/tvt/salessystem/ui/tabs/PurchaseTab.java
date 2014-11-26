@@ -163,26 +163,15 @@ public class PurchaseTab implements Refreshable{
     }
 
 
-    public void endPurchaseAfterPaying() {
-        log.info("Sale complete");
-        try {
-
-            log.debug("Contents of the current basket:\n"
-                    + model.getCurrentPurchaseTableModel());
-            domainController.registerSale(
-            		model.getCurrentPurchaseTableModel().getSale());
-            endSale();
-            model.getCurrentPurchaseTableModel().clear();
-        } catch (VerificationFailedException e1) {
-            log.error(e1.getMessage());
-        }
-    }
-
-    public void cancelPaying() {
-        submitPurchase.setEnabled(true);
-        cancelPurchase.setEnabled(true);
-        purchasePane.setEnabled(true);
-    }
+    public void endPurchaseAfterPaying() throws VerificationFailedException {
+		log.info("Sale complete");
+		log.debug("Contents of the current basket:\n"
+				+ model.getCurrentPurchaseTableModel());
+		domainController.registerSale(
+                model.getCurrentPurchaseTableModel().getSale());
+		endSale();
+		model.getCurrentPurchaseTableModel().clear();
+	}
 
 
 
@@ -236,7 +225,11 @@ public class PurchaseTab implements Refreshable{
         newPurchase.setEnabled(true);
         purchasePane.setEnabled(false);
     }
-
+    public void cancelPaying() {
+        submitPurchase.setEnabled(true);
+        cancelPurchase.setEnabled(true);
+        purchasePane.setEnabled(true);
+    }
     /*
      * === Next methods just create the layout constraints objects that control
      * the the layout of different elements in the purchase tab. These
@@ -279,9 +272,9 @@ public class PurchaseTab implements Refreshable{
 
         return gc;
     }
-
+    //lisatud refresh
 	@Override
-	public void refresh(SalesDomainController dc) {
+	public void refresh() {
 		log.debug("Refresh called on PurchaseTab");
 		
 	}

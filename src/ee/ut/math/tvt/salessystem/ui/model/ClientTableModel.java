@@ -9,10 +9,15 @@ import ee.ut.math.tvt.salessystem.domain.data.Client;
  * Client model.
  */
 public class ClientTableModel extends SalesSystemTableModel<Client> {
+	
 	private static final long serialVersionUID = 1L;
+	//MUUTUS 
+	//lisatud list 
 	private List<Client> rows;
+	
 	public ClientTableModel() {
 		super(new String[] { "Id", "First name", "Discount"});
+		//MUUTUS
 		this.rows = new ArrayList<Client>();
 	}
 
@@ -46,12 +51,14 @@ public class ClientTableModel extends SalesSystemTableModel<Client> {
 
 		return buffer.toString();
 	}
-
+	
+	//MUUTUS
 	@Override
 	public List<Client> getTableRows() {
 		return this.rows;
 	}
-
+	
+	//MUUTUS
 	@Override
 	public void clear() {
 		rows.clear();

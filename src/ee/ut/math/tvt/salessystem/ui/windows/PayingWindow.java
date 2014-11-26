@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 public class PayingWindow {
@@ -142,8 +143,14 @@ public class PayingWindow {
         commitButton = new JButton("Commit");
         commitButton.setEnabled(false);
         commitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parent.endPurchaseAfterPaying();
+            //MUUTUS
+        	public void actionPerformed(ActionEvent e) {
+        		try {
+					parent.endPurchaseAfterPaying();
+				} catch (VerificationFailedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 payingWindow.setVisible(false);
             }
         });        

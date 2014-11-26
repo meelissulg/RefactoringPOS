@@ -8,6 +8,7 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -25,10 +26,12 @@ import org.apache.log4j.Logger;
  * labelled "History" in the menu).
  */
 public class HistoryTab implements Refreshable{
+	//lisatud logger
 	private static final Logger log = Logger.getLogger(HistoryTab.class);
     private SalesSystemModel model;
 
     private PurchaseInfoTableModel historyDetailsTableModel;
+	private SalesDomainController domainController;
 
     public HistoryTab(SalesSystemModel model) {
         this.model = model;
@@ -117,11 +120,12 @@ public class HistoryTab implements Refreshable{
         gc.weighty = 1.0;
         return gc;
     }
-
+    
+    //lisatud refresh
 	@Override
-	public void refresh(SalesDomainController dc) {
-    	this.model.getPurchaseHistoryTableModel().populateWithData(dc.getAllSales());
-    	this.model.getPurchaseHistoryTableModel().fireTableDataChanged();
+	public void refresh() {
+		List <Sale> sales = domainController.getAllSales();
+        model.getPurchaseHistoryTableModel().populateWithData(sales);
     	log.debug("Refresh called on HistoryTab");
 	}
 
