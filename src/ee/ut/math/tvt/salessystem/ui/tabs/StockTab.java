@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
 
-public class StockTab {
+public class StockTab implements Refreshable{
 
     private static final Logger log = Logger.getLogger(StockTab.class);
     private final SalesDomainController controller;
@@ -188,5 +188,12 @@ public class StockTab {
             );
         }
     }
+
+	@Override
+	public void refresh(SalesDomainController dc) {
+		this.model.getWarehouseTableModel().populateWithData(dc.getAllStockItems());		
+		this.model.getWarehouseTableModel().fireTableDataChanged();
+    	log.debug("Refresh called on StockTab");
+	}
 
 }

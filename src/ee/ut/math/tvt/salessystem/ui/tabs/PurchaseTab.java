@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "Point-of-sale" in the menu).
  */
-public class PurchaseTab {
+public class PurchaseTab implements Refreshable{
 
     private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
@@ -169,9 +169,8 @@ public class PurchaseTab {
 
             log.debug("Contents of the current basket:\n"
                     + model.getCurrentPurchaseTableModel());
-            Sale sale = new Sale(model.getSelectedClient());
             domainController.registerSale(
-                   sale);
+            		model.getCurrentPurchaseTableModel().getSale());
             endSale();
             model.getCurrentPurchaseTableModel().clear();
         } catch (VerificationFailedException e1) {
@@ -224,6 +223,7 @@ public class PurchaseTab {
         }
         // update selected client
         model.setSelectedClient(currentClient);
+        model.getCurrentPurchaseTableModel().setSale(new Sale(currentClient));
     }
 
 
@@ -279,5 +279,11 @@ public class PurchaseTab {
 
         return gc;
     }
+
+	@Override
+	public void refresh(SalesDomainController dc) {
+		log.debug("Refresh called on PurchaseTab");
+		
+	}
 
 }

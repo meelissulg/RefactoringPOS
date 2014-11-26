@@ -9,12 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import org.apache.log4j.Logger;
+
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 
-public class ClientTab {
+public class ClientTab implements Refreshable{
+	
+	private static final Logger log = Logger.getLogger(ClientTab.class);
     
-    private SalesSystemModel model;
+	private SalesSystemModel model;
     
     public ClientTab(SalesSystemModel model) {
         this.model = model;
@@ -64,6 +69,13 @@ public class ClientTab {
         gc.weightx = 1.0;
         gc.weighty = 1.0;
         return gc;
-    }    
+    }
+
+	@Override
+	public void refresh(SalesDomainController dc) {
+		this.model.getClientTableModel().populateWithData(dc.getAllClients());
+    	this.model.getClientTableModel().fireTableDataChanged();
+    	log.debug("Refresh called on ClientTab");
+	}    
     
 }

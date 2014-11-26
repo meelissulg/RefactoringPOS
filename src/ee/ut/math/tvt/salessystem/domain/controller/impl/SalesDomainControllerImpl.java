@@ -68,9 +68,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     }
 
 
-   
-
-
     public void createStockItem(StockItem stockItem) {
         // Begin transaction
         Transaction tx = session.beginTransaction();
@@ -109,16 +106,26 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	@Override
 	public void registerSale(Sale sale) throws VerificationFailedException {
-		//sale.setSellingTime();
-		Transaction tx = session.beginTransaction();
-		
-		for (SoldItem solditem : sale.getSoldItems()){
-			StockItem stockItem = getStockItem(solditem.getStockItem().getId());
-			stockItem.setQuantity(stockItem.getQuantity()
-					- solditem.getQuantity());
-			session.save(stockItem);	
-		}
-		
+		 // Begin transaction
+        Transaction tx = session.beginTransaction();
+
+        // Reduce quantities of stockItems in warehouse
+        for (SoldItem item : sale.getSoldItems()) {
+            // Associate with current sale
+            item.setSale(sale);
+
+            StockItem stockItem = getStockItem(item.getStockItem().getId());
+            stockItem.setQuantity(stockItem.getQuantity() - item.getQuantity());
+            session.save(stockItem);
+        }
+        sale.setSellingTime(new Date());
+        session.save(sale);
+
+        // end transaction
+        tx.commit();
+
+        //model.getPurchaseHistoryTableModel().addRow(sale);
 	}
+    
 
 }

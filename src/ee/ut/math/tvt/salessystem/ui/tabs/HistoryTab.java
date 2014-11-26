@@ -1,11 +1,14 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.Sale;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,13 +17,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "History" in the menu).
  */
-public class HistoryTab {
-
+public class HistoryTab implements Refreshable{
+	private static final Logger log = Logger.getLogger(HistoryTab.class);
     private SalesSystemModel model;
 
     private PurchaseInfoTableModel historyDetailsTableModel;
@@ -112,6 +117,13 @@ public class HistoryTab {
         gc.weighty = 1.0;
         return gc;
     }
+
+	@Override
+	public void refresh(SalesDomainController dc) {
+    	this.model.getPurchaseHistoryTableModel().populateWithData(dc.getAllSales());
+    	this.model.getPurchaseHistoryTableModel().fireTableDataChanged();
+    	log.debug("Refresh called on HistoryTab");
+	}
 
 }
 

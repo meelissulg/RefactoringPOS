@@ -1,11 +1,9 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +26,7 @@ public class Sale implements DisplayableItem {
     private Long id;
 
     @OneToMany(targetEntity = SoldItem.class, mappedBy = "sale", cascade = CascadeType.ALL)
-    private List<SoldItem> soldItems;
+    private Set<SoldItem> soldItems;
     private Date sellingTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,12 +35,16 @@ public class Sale implements DisplayableItem {
 
     /** Empty constructors are used by hibernate */
     public Sale() {
-    	soldItems = new ArrayList<SoldItem>();
     }
 
-    public Sale(Client client) {
-        this.client = client;
-        soldItems = new ArrayList<SoldItem>();
+    public Sale(List<SoldItem> goods) {
+        this.soldItems = new HashSet<SoldItem>(goods);
+        this.sellingTime = new Date();
+    }
+    
+    public Sale(Client client){
+        this.client=client;
+        this.soldItems = new HashSet<SoldItem>();
     }
 
     public Client getClient() {
@@ -57,15 +59,15 @@ public class Sale implements DisplayableItem {
         return sellingTime;
     }
 
-    public void setSellingTime() {
-        this.sellingTime = new Date();
+    public void setSellingTime(Date sellingTime) {
+        this.sellingTime = sellingTime;
     }
 
-    public List<SoldItem> getSoldItems() {
+    public Set<SoldItem> getSoldItems() {
         return soldItems;
     }
 
-    public void setSoldItems(List<SoldItem> soldItems) {
+    public void setSoldItems(Set<SoldItem> soldItems) {
         this.soldItems = soldItems;
     }
 
@@ -77,9 +79,9 @@ public class Sale implements DisplayableItem {
         this.id = id;
     }
 
-    public void addSoldItem(SoldItem solditem) {
-        solditem.setSale(this);
-        soldItems.add(solditem);
+    public void addSoldItem(SoldItem item) {
+        item.setSale(this);
+        soldItems.add(item);
     }
 
     public double getSum() {

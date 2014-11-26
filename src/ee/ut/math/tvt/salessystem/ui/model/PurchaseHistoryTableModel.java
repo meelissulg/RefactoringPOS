@@ -14,7 +14,6 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 	private static final long serialVersionUID = 1L;
 
 	private static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-
 	private List<Sale> rows;
 	
 	public PurchaseHistoryTableModel() {
@@ -45,9 +44,9 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 			buffer.append(headers[i] + "\t");
 		buffer.append("\n");
 
-		for (final Sale sale : getTableRows()) {
+		for (final Sale sale : rows) {
 			buffer.append(sale.getId() + "\t");
-			//buffer.append(sale.getClient() != null ? sale.getClient().getFirstName() : "" + "\t");
+			buffer.append(sale.getClient() != null ? sale.getClient().getFirstName() : "" + "\t");
 			buffer.append(sale.getSum() + "\t");
 			buffer.append("\n");
 		}
@@ -58,5 +57,11 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 	@Override
 	public List<Sale> getTableRows() {
 		return this.rows;
+	}
+
+	@Override
+	public void clear() {
+		rows.clear();
+        fireTableDataChanged();
 	}
 }

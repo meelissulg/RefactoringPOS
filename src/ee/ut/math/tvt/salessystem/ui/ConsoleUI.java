@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -131,10 +132,13 @@ public class ConsoleUI {
                 return;
             }
             try {
-            	Sale sale = new Sale(selectedClient);
+                List<SoldItem> soldItems = new ArrayList<SoldItem>();
                 for(StockItem stockItem : cart) {
-                    sale.addSoldItem(new SoldItem(stockItem, stockItem.getQuantity()));
+                    soldItems.add(new SoldItem(stockItem, stockItem.getQuantity()));
                 }
+                Sale sale = new Sale(soldItems);
+                sale.setClient(selectedClient);
+                sale.setSellingTime(new Date());
                 dc.registerSale(sale);
                 cart.clear();
             } catch (VerificationFailedException e) {
